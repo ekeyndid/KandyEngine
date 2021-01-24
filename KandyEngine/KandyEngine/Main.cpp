@@ -1,21 +1,17 @@
-#include "Window.h"
+#include "Engine/Core/CoreEngine.h"
 
-Window* window;
+CoreEngine* engine;
 
 int main(int argc, char* argv[]) {
-	window = new Window();
-	if (!window->OnCreate("GAME258 - KandyEngine", 800, 600)) {
+	engine = new CoreEngine;
+	if (!engine->OnCreate("GAME258 - KandyEngine", 800, 600)) {
 
-		delete window;
-		window = nullptr;
+		delete engine;
+		engine = nullptr;
 		return 0;
 	}
-	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	SDL_GL_SwapWindow(window->GetWindow());
-	SDL_Delay(5000);
-	delete window;
-	window = nullptr;
+	engine->Run();
+	delete engine;
+	engine = nullptr;
 	return 0;
 }
