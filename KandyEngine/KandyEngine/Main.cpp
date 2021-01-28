@@ -3,15 +3,11 @@
 CoreEngine* engine;
 
 int main(int argc, char* argv[]) {
-	engine = new CoreEngine;
-	if (!engine->OnCreate("GAME258 - KandyEngine", 800, 600)) {
+	if (!CoreEngine::GetInstance()->OnCreate("GAME258 - KandyEngine", 800, 600)) {
 
-		delete engine;
-		engine = nullptr;
+		std::cout << "Engine failed to initalize" << std::endl;
 		return 0;
 	}
-	engine->Run();
-	delete engine;
-	engine = nullptr;
+	CoreEngine::GetInstance()->Run();
 	return 0;
 }

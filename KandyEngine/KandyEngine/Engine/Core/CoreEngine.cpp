@@ -1,5 +1,7 @@
 #include "CoreEngine.h"
 
+std::unique_ptr<CoreEngine> CoreEngine::engineBasket = nullptr;
+
 CoreEngine::CoreEngine()
 {
 	window = nullptr;
@@ -9,6 +11,15 @@ CoreEngine::CoreEngine()
 
 CoreEngine::~CoreEngine()
 {
+}
+
+CoreEngine* CoreEngine::GetInstance()
+{
+	if (engineBasket.get() == nullptr) {
+		engineBasket.reset(new CoreEngine);
+
+	}
+	return engineBasket.get();
 }
 
 bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
