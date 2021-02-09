@@ -1,6 +1,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "Log.h"
+
 #include <SDL.h>
 #include <glew.h>
 #include <SDL_opengl.h>

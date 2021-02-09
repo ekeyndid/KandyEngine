@@ -2,10 +2,13 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineBasket = nullptr;
 
-CoreEngine::CoreEngine()
+CoreEngine::CoreEngine() : fps(30)
 {
 	window = nullptr;
 	isRunning = false;
+	timer = nullptr;
+	CurrentSceneNum = 0;
+	
 
 }
 
@@ -24,22 +27,40 @@ CoreEngine* CoreEngine::GetInstance()
 
 bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 {
+	Log::OnCreate();
 	window = new Window();
+	timer = new Timer();
 	if (!window->OnCreate(name_, width_, height_)) {
 
-		std::cout << "Failed to create window" << std::endl;
+		Log::FatalError("Failed to create window", "Window.cpp", __LINE__);
 		OnDestroy();
 		return isRunning = false;
 	}
+	
+	if (newgame) {
+
+		if (!newgame->OnCreate()) {
+
+			Log::FatalError("Failed to create Game", "NewGame.cpp", __LINE__);
+			OnDestroy();
+			return isRunning = false;
+
+		}
+	}
+
+	Log::Info("Everything worked","CoreEngine.cpp", __LINE__);
+	timer->Start();
 	return isRunning = true;
 }
 
 void CoreEngine::Run()
 {
+	
 	while (isRunning) {
-
-		Update(0.016f);
+		timer->UpdateFrameTicks();
+		Update(timer->GetDeltaTime());
 		Render();
+		SDL_Delay(timer->GetSleepTime(fps));
 	}
 	if (!isRunning) {
 		OnDestroy();
@@ -47,13 +68,34 @@ void CoreEngine::Run()
 
 }
 
-bool CoreEngine::GetIsRunning()
+void CoreEngine::Exit()
 {
+	isRunning = false;
+}
+
+bool CoreEngine::GetIsRunning() const {
 	return isRunning;
+}
+
+int CoreEngine::GetCurrentScene() const
+{
+	return CurrentSceneNum;
+}
+
+void CoreEngine::SetNewGame(NewGame* newgame_) { newgame = newgame_; }
+
+void CoreEngine::SetCurrentScene(int sceneNum_)
+{
+	CurrentSceneNum = sceneNum_;
 }
 
 void CoreEngine::Update(const float deltaTime_)
 {
+	if (newgame) {
+		newgame->Update(deltaTime_);
+		std::cout << deltaTime_ << std::endl;
+	}
+
 }
 
 void CoreEngine::Render()
@@ -61,14 +103,24 @@ void CoreEngine::Render()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
+	if (newgame) {
+		newgame->Render();
+	}
 	SDL_GL_SwapWindow(window->GetWindow());
 
 }
 
 void CoreEngine::OnDestroy()
 {
+	delete newgame;
+	newgame = nullptr;
+	
+	delete timer;
+	timer = nullptr;
+	
 	delete window;
 	window = nullptr;
+	
 	SDL_Quit();
 	exit(0);
 }

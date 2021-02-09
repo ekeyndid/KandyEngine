@@ -1,8 +1,13 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
 
-#include "Window.h"
 #include <memory>
+#include "Window.h"
+#include "Timer.h"
+#include "Log.h"
+#include "NewGame.h"
+#include "Scene.h"
+
 class CoreEngine
 {
 public:
@@ -18,8 +23,15 @@ public:
 	bool OnCreate(std::string name_, int width_, int height_);
 	// gets the engine running and refreshing with Update(), and calls Ondestroy when it checks that it isnt running
 	void Run();
+	
+	void Exit();
 	//returns IsRunning once 
-	bool GetIsRunning();
+	bool GetIsRunning() const;
+	int GetCurrentScene() const;
+	
+	void SetNewGame(NewGame* newgame_);
+	void SetCurrentScene(int sceneNum_);
+
 private:
 	CoreEngine();
 	~CoreEngine();
@@ -35,6 +47,11 @@ private:
 	
 	Window* window;
 	bool isRunning;
+	Timer* timer;
+	unsigned int fps;
+
+	NewGame* newgame;
+	int CurrentSceneNum;
 };
 
 #endif

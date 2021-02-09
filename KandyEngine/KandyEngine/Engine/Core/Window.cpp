@@ -16,7 +16,7 @@ bool Window::OnCreate(std::string name_, int width_, int height_)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 
-		std::cout << "Failed to initialize SDL" << std::endl;
+		Log::FatalError("Failed to initialize SDL", "SDL.h", __LINE__);
 		return false;
 	}
 	width = width_;
@@ -31,8 +31,7 @@ bool Window::OnCreate(std::string name_, int width_, int height_)
 		height,
 		SDL_WINDOW_OPENGL);
 	if (!window) {
-
-		std::cout << "Failed to create window" << std::endl;
+		Log::FatalError("Failed to create window", "Window.cpp", __LINE__);
 		return false;
 	}
 
@@ -41,8 +40,7 @@ bool Window::OnCreate(std::string name_, int width_, int height_)
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
-
-		std::cout << "Failed to initalize GLEW" << std::endl;
+		Log::FatalError("Failed to initalize GLEW","glew.h", __LINE__);
 		return false;
 	}
 	glEnable(GL_DEPTH_TEST);
