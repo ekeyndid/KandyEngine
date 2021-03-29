@@ -37,7 +37,9 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 		OnDestroy();
 		return isRunning = false;
 	}
-	
+	ShaderHandler::GetInstance()->CreateProgram("colourShader",
+		"Engine/Shaders/ColourVertexShader.glsl",
+		"Engine/Shaders/ColourFragmentShader.glsl");
 	if (newgame) {
 
 		if (!newgame->OnCreate()) {
@@ -113,6 +115,7 @@ void CoreEngine::Render()
 
 void CoreEngine::OnDestroy()
 {
+	ShaderHandler::GetInstance()->OnDestroy();
 	delete newgame;
 	newgame = nullptr;
 	

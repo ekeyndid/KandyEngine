@@ -20,24 +20,31 @@ bool GameScene::OnCreate()
 	vertexList.reserve(6);
 	// element 1
 	v.position = glm::vec3(-0.2f, 0.0f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	// element 2
 	v.position = glm::vec3(0.2f, 0.0f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	// element 3
 	v.position = glm::vec3(0.2f, 0.3f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	
 	// element 4
 	v.position = glm::vec3(-0.2f, 0.3f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	// element 5
 	v.position = glm::vec3(0.2f, 0.3f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	// element 6
 	v.position = glm::vec3(-0.2f, 0.0f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
-	Model* model = new Model();
+	
+	Model* model = new Model(ShaderHandler::GetInstance()->GetShader("colourShader"));
 	model->AddMesh(new Mesh(vertexList));
 	square = new GameObject(model);
 
