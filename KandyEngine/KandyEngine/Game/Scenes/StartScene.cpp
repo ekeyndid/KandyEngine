@@ -10,7 +10,8 @@ StartScene::~StartScene()
 
 bool StartScene::OnCreate()
 {
-	std::cout << "Scene Started" << std::endl;
+	Log::Info("Start scene", __FILE__, __LINE__);
+	CoreEngine::GetInstance()->SetCurrentScene(1);
 	return true;
 }
 

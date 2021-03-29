@@ -1,1 +1,3 @@
-[INFO]: Everything worked in: CoreEngine.cpp on line: 50
+[INFO]: Start scene in: C:\Users\kandy\Documents\GitHub\KandyEngine\KandyEngine\KandyEngine\Game\Scenes\StartScene.cpp on line: 13
+[INFO]: Everything worked in: CoreEngine.cpp on line: 52
+[INFO]: Creating GameScene in: GameScene.cpp on line: 16

@@ -50,6 +50,7 @@ void FirstGame::BulidScene()
 	
 	default: // case 0
 		currentScene = new StartScene();
+		break;
 	
 	}
 
