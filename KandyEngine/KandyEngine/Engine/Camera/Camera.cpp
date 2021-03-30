@@ -77,5 +77,5 @@ void Camera::UpdateCameraVectors()
 
 	up = glm::normalize(glm::cross(right, forward));
 
-	view - glm::lookAt(position, position + forward, up);
+	view = glm::lookAt(position, position + forward, up);
 }
