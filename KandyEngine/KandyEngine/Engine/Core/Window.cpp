@@ -43,8 +43,10 @@ bool Window::OnCreate(std::string name_, int width_, int height_)
 		Log::FatalError("Failed to initalize GLEW","glew.h", __LINE__);
 		return false;
 	}
-	glEnable(GL_DEPTH_TEST);
 	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+
+	glViewport(0, 0, width, height);
+
 	return true;
 }
 

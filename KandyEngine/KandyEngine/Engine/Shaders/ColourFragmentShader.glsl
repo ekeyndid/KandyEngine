@@ -1,4 +1,4 @@
-#version 450 cpre
+#version 450 core
 
 in vec3 Normal;
 in vec2 TextCoords;

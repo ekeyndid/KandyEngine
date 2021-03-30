@@ -11,8 +11,9 @@ public:
 	void Update(const float deltaTime_) override;
 	void Render() override;
 private:
-	GameObject* triangle;
+	//GameObject* triangle;
 	GameObject* square;
+	Model* model;
 };
 
 #endif // !GAMESCENE_H

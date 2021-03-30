@@ -12,9 +12,9 @@ GameObject::~GameObject()
 	model = nullptr;
 }
 
-void GameObject::Render()
+void GameObject::Render(Camera* camera_)
 {
 	if (model) {
-		model->Render();
+		model->Render(camera_);
 }
 }

@@ -7,7 +7,7 @@ CoreEngine* engine;
 int main(int argc, char* argv[]) {
 	CoreEngine::GetInstance()->SetNewGame(new FirstGame);
 	
-	if (!CoreEngine::GetInstance()->OnCreate("GAME258 - KandyEngine", 800, 600)) {
+	if (!CoreEngine::GetInstance()->OnCreate("GAME258 - KandyEngine", 1000, 800)) {
 
 		Log::FatalError("Engine failed to initalize", "CoreEngine.cpp", __LINE__);
 		return 0;

@@ -9,6 +9,7 @@ CoreEngine::CoreEngine() : fps(30)
 	timer = nullptr;
 	newgame = nullptr;
 	CurrentSceneNum = 0;
+	camera = nullptr;
 	
 
 }
@@ -85,6 +86,22 @@ int CoreEngine::GetCurrentScene() const
 	return CurrentSceneNum;
 }
 
+float CoreEngine::GetScreenWidth() const
+{
+	return static_cast<float>(window->GetWidth());
+}
+
+float CoreEngine::GetScreenHeight() const
+{
+	return static_cast<float>(window->GetHeight());
+
+}
+
+Camera* CoreEngine::GetCamera() const
+{
+	return camera;
+}
+
 void CoreEngine::SetNewGame(NewGame* newgame_) { newgame = newgame_; }
 
 void CoreEngine::SetCurrentScene(int sceneNum_)
@@ -92,18 +109,22 @@ void CoreEngine::SetCurrentScene(int sceneNum_)
 	CurrentSceneNum = sceneNum_;
 }
 
+void CoreEngine::SetCamera(Camera* camera_)
+{
+	camera = camera_;
+}
+
 void CoreEngine::Update(const float deltaTime_)
 {
 	if (newgame) {
 		newgame->Update(deltaTime_);
-		std::cout << deltaTime_ << std::endl;
 	}
 
 }
 
 void CoreEngine::Render()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	if (newgame) {
@@ -118,6 +139,9 @@ void CoreEngine::OnDestroy()
 	ShaderHandler::GetInstance()->OnDestroy();
 	delete newgame;
 	newgame = nullptr;
+
+	delete camera;
+	camera = nullptr;
 	
 	delete timer;
 	timer = nullptr;
