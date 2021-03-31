@@ -41,6 +41,10 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 	ShaderHandler::GetInstance()->CreateProgram("colourShader",
 		"Engine/Shaders/ColourVertexShader.glsl",
 		"Engine/Shaders/ColourFragmentShader.glsl");
+
+	ShaderHandler::GetInstance()->CreateProgram("basicShader",
+		"Engine/Shaders/VertexShader.glsl",
+		"Engine/Shaders/FragmentShader.glsl");
 	if (newgame) {
 
 		if (!newgame->OnCreate()) {
@@ -137,6 +141,8 @@ void CoreEngine::Render()
 void CoreEngine::OnDestroy()
 {
 	ShaderHandler::GetInstance()->OnDestroy();
+	TextureHandler::GetInstance()->OnDestroy();
+	
 	delete newgame;
 	newgame = nullptr;
 

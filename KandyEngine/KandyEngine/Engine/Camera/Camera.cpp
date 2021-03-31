@@ -28,6 +28,15 @@ yaw(0.0f), pitch(0.0f), perspective(glm::mat4()), orthographic(glm::mat4()), vie
 
 Camera::~Camera()
 {
+	if (lightSources.size() > 0)
+	{
+		for (auto l : lightSources)
+		{
+			delete l;
+			l = nullptr;
+		}
+	}
+	lightSources.clear();
 }
 
 void Camera::SetPosition(glm::vec3 position_)
@@ -43,6 +52,16 @@ void Camera::SetRotation(float yaw_, float pitch_)
 	pitch = pitch_;
 	UpdateCameraVectors();
 
+}
+
+void Camera::AddLightSource(LightSource* light_)
+{
+	lightSources.push_back(light_);
+}
+
+const std::vector<LightSource*> Camera::GetLightSources() const
+{
+	return lightSources;
 }
 
 glm::mat4 Camera::GetView() const
