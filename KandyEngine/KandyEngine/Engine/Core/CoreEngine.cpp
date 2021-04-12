@@ -2,7 +2,7 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineBasket = nullptr;
 
-CoreEngine::CoreEngine() : fps(30)
+CoreEngine::CoreEngine() : fps(144)
 {
 	window = nullptr;
 	isRunning = false;
@@ -128,7 +128,7 @@ void CoreEngine::Update(const float deltaTime_)
 
 void CoreEngine::Render()
 {
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	if (newgame) {
@@ -142,6 +142,8 @@ void CoreEngine::OnDestroy()
 {
 	ShaderHandler::GetInstance()->OnDestroy();
 	TextureHandler::GetInstance()->OnDestroy();
+	MaterialHandler::GetInstance()->OnDestroy();
+	SceneGraph::GetInstance()->OnDestroy();
 	
 	delete newgame;
 	newgame = nullptr;

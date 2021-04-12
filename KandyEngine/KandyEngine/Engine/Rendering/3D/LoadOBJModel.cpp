@@ -3,7 +3,7 @@
 LoadOBJModel::LoadOBJModel() : vertices(std::vector<glm::vec3>()), normals(std::vector<glm::vec3>()),
 textureCoords(std::vector<glm::vec2>()), indice(std::vector<unsigned int>()),
 normalIndice(std::vector<unsigned int>()), textureIndice(std::vector<unsigned int>()),
-meshVertices(std::vector<Vertex>()), subMeshes(std::vector<SubMesh>()), currentTexture(0) {
+meshVertices(std::vector<Vertex>()), subMeshes(std::vector<SubMesh>()), currentMaterial(Material()) {
 	vertices.reserve(200);
 	normals.reserve(200);
 	textureCoords.reserve(200);
@@ -50,7 +50,7 @@ void LoadOBJModel::PostProcessing()
 	SubMesh mesh;
 	mesh.vertexList = meshVertices;
 	mesh.meshIndice = indice;
-	mesh.textureID = currentTexture;
+	mesh.material = currentMaterial;
 
 	subMeshes.push_back(mesh);
 
@@ -59,7 +59,7 @@ void LoadOBJModel::PostProcessing()
 	textureIndice.clear();
 	meshVertices.clear();
 
-	currentTexture = 0;
+	currentMaterial = Material();
 }
 
 void LoadOBJModel::LoadModel(const std::string& filePath_)
@@ -70,7 +70,7 @@ void LoadOBJModel::LoadModel(const std::string& filePath_)
 			"LoadOBJModel.cpp", __LINE__);
 		return;
 	}
-	currentTexture = 0;
+	currentMaterial = Material();
 	
 	std::string line;
 	
@@ -144,23 +144,10 @@ void LoadOBJModel::LoadModel(const std::string& filePath_)
 
 void LoadOBJModel::LoadMaterial(const std::string& matName_)
 {
-	currentTexture = TextureHandler::GetInstance()->GetTexture(matName_);
-	if (currentTexture == 0) {
-		TextureHandler::GetInstance()->CreateTexture(matName_, "Engine/Resources/Textures/" + matName_ + ".png");
-		currentTexture = TextureHandler::GetInstance()->GetTexture(matName_);
-	}
+	currentMaterial = MaterialHandler::GetInstance()->GetMaterial(matName_);
 }
 
 void LoadOBJModel::LoadMaterialLibary(const std::string& matFilePath_)
 {
-	std::ifstream in(matFilePath_.c_str(), std::ios::in);
-	if (!in) {
-		Log::Error("Cannot open MTL file: " + matFilePath_, "LoadOBJModel", __LINE__);
-	}
-	std::string line;
-	while (std::getline(in, line)) {
-		if (line.substr(0, 7) == "newmtl "){
-			LoadMaterial(line.substr(7));
-		}
-	}
+	MaterialLoader::LoadMaterial(matFilePath_);
 }

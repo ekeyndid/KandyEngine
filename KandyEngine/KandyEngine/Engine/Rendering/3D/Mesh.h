@@ -7,19 +7,19 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "../../Camera/Camera.h"
+#include "../../Graphics/MaterialHandler.h"
 
 struct Vertex {
 
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec2 textureCoordinates;
-	glm::vec3 colour;
 };
 
 struct SubMesh {
 	std::vector<Vertex> vertexList;
 	std::vector<unsigned int> meshIndice;
-		GLuint textureID;
+	Material material;
 };
 
 class Mesh
@@ -37,6 +37,7 @@ private:
 	GLuint shaderProgram;
 	GLuint modelLoc, viewLoc, projectionLoc, textureLoc;
 	GLuint viewPosLoc, lightPosLoc, ambientLoc, diffuseLoc, specularLoc, colourLoc;
+	GLuint matDiffMap, matShine, matTrans, matAmb, matDiff, matSpec;
 };
 
 #endif // !MESH_H
